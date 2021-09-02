@@ -1,162 +1,230 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-
-
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import StarIcon from "@material-ui/icons/Star";
-import SendIcon from "@material-ui/icons/Send";
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import HomeIcon from '@material-ui/icons/Home';
+import InfoIcon from '@material-ui/icons/Info';
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import ContactsIcon from '@material-ui/icons/Contacts';
+import InboxIcon from '@material-ui/icons/Inbox';
+import BookIcon from '@material-ui/icons/Book';
+import StarIcon from '@material-ui/icons/Star';
 
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import Collapse from '@material-ui/core/Collapse';
+import HomeComponent from './homeComponent';
+import About from './about';
+import Services from './services';
+import ContactUs from './contactUs'
 
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  hide: {
+    display: 'none',
+  },
+  iconColor:{
+      color:"#8f00ff",
+  },
+  headerColor:{
+      background:"#8f00ff",
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
     },
-    flex: {
-        flex: 1,
-    },
-    menuButton: {
-        marginLeft: -12,
-        marginRight: 20,
-    },
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  dropDownCss:{
+   paddingLeft:20,
+  },
 }));
 
-
 const SimpleLayout = () => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const [dropdown, setDropdown] = React.useState(false);
 
-    const [open, setOpen] = React.useState(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-    const handleClick = () => {
-      setOpen(!open);
-    };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-    const classes = useStyles();
-    return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="title" color="inherit" className={classes.flex}>
-                        Title
-                    </Typography>
-                    <Button color="inherit">Login</Button>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper
-                }}
-            >
+  const handleClick = () => {
+    setDropdown(!dropdown);
+  };
 
-                <List>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <InboxIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Home" />
-                    </ListItem>
-                    <ListItem button >
-                        <ListItemIcon>
-                            <InboxIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Tabs" />
-                    </ListItem>
-                    <ListItem button >
-                        <ListItemIcon>
-                            <StarIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Cards" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <StarIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Navigation" />
-                    </ListItem>
-                    <ListItem button >
-                        <ListItemIcon>
-                            <StarIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="GridList" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <SendIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Forms" />
-                    </ListItem>
-                    <ListItem button >
-                        <ListItemIcon>
-                            <SendIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Lists" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <SendIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Modal" />
-                    </ListItem>
-                    <ListItem button >
-                        <ListItemIcon>
-                            <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Tables" />
-                    </ListItem>
-                    <ListItem button >
-                        <ListItemIcon>
-                            <DraftsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Themes" />
-                    </ListItem>
-                        <ListItem button onClick={handleClick}>
-                    <ListItemIcon>
+  
+  return (
+    <div className={classes.root}>
+     <Router >   
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar className={classes.headerColor}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
+            })}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+           Logo
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+            <ListItem button component={Link} to="/">
+              <ListItemIcon className={classes.iconColor}><HomeIcon /></ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
+            <ListItem button component={Link} to="/about">
+              <ListItemIcon className={classes.iconColor}><InfoIcon /></ListItemIcon>
+              <ListItemText primary="About" />
+            </ListItem>
+            <ListItem button component={Link} to="/services">
+              <ListItemIcon className={classes.iconColor}><SettingsApplicationsIcon /></ListItemIcon>
+              <ListItemText primary="Servies" />
+            </ListItem>
+            <ListItem button component={Link} to="/contactus">
+              <ListItemIcon className={classes.iconColor}><ContactsIcon /></ListItemIcon>
+              <ListItemText primary="Contact Us" />
+            </ListItem>
+            <ListItem button onClick={handleClick} >
+                    <ListItemIcon className={classes.iconColor}>
                     <InboxIcon />
                     </ListItemIcon>
                     <ListItemText primary="Inbox" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
+                    {dropdown ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                <Collapse in={dropdown} timeout="auto" unmountOnExit className={classes.dropDownCss}>
                     <List component="div" disablePadding>
                     <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                        <StarBorder />
+                        <ListItemIcon className={classes.iconColor}>
+                        <StarIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Starred" />
+                        <ListItemText primary="Stared" />
                     </ListItem>
                     </List>
                 </Collapse>
-                </List>
-            </Drawer>
-            <main className={classes.content} className="main-section">
-                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
+        </List>
+        <Divider />
+        <List>
+        <ListItem button>
+              <ListItemIcon className={classes.iconColor}><BookIcon /></ListItemIcon>
+              <ListItemText primary="Blog" />
+            </ListItem>
+        </List>
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Route exact path="/" component={HomeComponent} />
+        <Route path="/about" component={About} />
+        <Route path="/services" component={Services} />
+        <Route path="/contactus" component={ContactUs} />
 
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.</h4>
-                {/* <Route exact path="/" component={Home} />
-             */}
-            </main>
-        </div>
-    );
+      </main>
+     </Router>
+    </div>
+  );
 }
 
 
-export default SimpleLayout;
+export default  SimpleLayout;
