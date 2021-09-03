@@ -31,7 +31,9 @@ import Collapse from '@material-ui/core/Collapse';
 import HomeComponent from './homeComponent';
 import About from './about';
 import Services from './services';
-import ContactUs from './contactUs'
+import ContactDetails from './contactDetails';
+import Blog from './blog';
+
 
 const drawerWidth = 240;
 
@@ -183,7 +185,7 @@ const SimpleLayout = () => {
               <ListItemIcon className={classes.iconColor}><SettingsApplicationsIcon /></ListItemIcon>
               <ListItemText primary="Servies" />
             </ListItem>
-            <ListItem button component={Link} to="/contactus">
+            <ListItem button component={Link} to="/ContactDetails">
               <ListItemIcon className={classes.iconColor}><ContactsIcon /></ListItemIcon>
               <ListItemText primary="Contact Us" />
             </ListItem>
@@ -207,7 +209,7 @@ const SimpleLayout = () => {
         </List>
         <Divider />
         <List>
-        <ListItem button>
+        <ListItem button component={Link} to ="/blog">
               <ListItemIcon className={classes.iconColor}><BookIcon /></ListItemIcon>
               <ListItemText primary="Blog" />
             </ListItem>
@@ -218,7 +220,8 @@ const SimpleLayout = () => {
         <Route exact path="/" component={HomeComponent} />
         <Route path="/about" component={About} />
         <Route path="/services" component={Services} />
-        <Route path="/contactus" component={ContactUs} />
+        <Route path="/contactDetails" component={ContactDetails} />
+        <Route path="/blog" component ={Blog} />
 
       </main>
      </Router>
