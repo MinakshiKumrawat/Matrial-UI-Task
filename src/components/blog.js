@@ -1,6 +1,6 @@
 const Blog = () => {
     return<>
-    <div>blog</div>
+    <div>blog..</div>
 </>
 
 }
