@@ -76,6 +76,20 @@ const useStyles = makeStyles((theme) => ({
               </ImageListItem>
             ))}
           </ImageList>
+          <ImageList rowHeight={200} gap={1} className={classes.imageList}>
+            {tutorialSteps.map((item) => (
+              <ImageListItem >
+                <img src={item.imgPath} alt={item.label} />
+                <ImageListItemBar
+                  title={item.label}
+                  position="top"
+                 
+                  actionPosition="left"
+                  className={classes.titleBar}
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
         </div>
       );
     }
