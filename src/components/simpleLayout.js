@@ -33,6 +33,7 @@ import About from './about';
 import Services from './services';
 import ContactDetails from './contactDetails';
 import Blog from './blog';
+import TableData from './tableData';
 
 
 const drawerWidth = 240;
@@ -198,7 +199,7 @@ const SimpleLayout = () => {
                 </ListItem>
                 <Collapse in={dropdown} timeout="auto" unmountOnExit className={classes.dropDownCss}>
                     <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
+                    <ListItem button className={classes.nested} component={Link} to="/table">
                         <ListItemIcon className={classes.iconColor}>
                         <StarIcon />
                         </ListItemIcon>
@@ -222,6 +223,7 @@ const SimpleLayout = () => {
         <Route path="/services" component={Services} />
         <Route path="/contactDetails" component={ContactDetails} />
         <Route path="/blog" component ={Blog} />
+        <Route path="/table" component ={TableData} />
 
       </main>
      </Router>
